@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import javax.sound.midi.SysexMessage;
 
 /**
  *
@@ -12,36 +11,23 @@ import javax.sound.midi.SysexMessage;
  */
 public class Terrain {
 
-	public static Terrain loadFromFile(File file) {
-		try (DataInputStream dis = new DataInputStream(new FileInputStream(file))) {
-			int width = dis.readInt(),
-					height = dis.readInt();
-			int[][] field = new int[height][width];
-			for (int y = 0; y < height; y++) {
-				for (int x = 0; x < width; x++) {
-					field[y][x] = dis.readInt();
-				}
-			}
-			return new Terrain(field);
-		} catch (IOException e) {
-			System.err.println("Failed reading file for terrain data:\n" + e.getClass().getSimpleName() + ": " + e.getMessage());
-			return null;
-		}
-	}
-
+	private int elevHighest, elevLowest;
 	int width, height;
 	int[][] field;
 
 	public Terrain(int width, int height) {
 		this.width = width;
 		this.height = height;
+		this.elevHighest = this.elevLowest = 0;
 		this.field = new int[height][width];
 	}
 
-	private Terrain(int[][] field) {
+	Terrain(int[][] field, int highest, int lowest) {
 		this.field = field;
 		this.height = field.length;
 		this.width = field[0].length;
+		this.elevHighest = highest;
+		this.elevLowest = lowest;
 	}
 
 	private void checkXY(int x, int y) throws IllegalArgumentException {
@@ -61,6 +47,22 @@ public class Terrain {
 	public int getField(int x, int y) {
 		this.checkXY(x, y);
 		return this.field[y][x];
-
 	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+	
+	public int getElevHighest() {
+		return elevHighest;
+	}
+
+	public int getElevLowest() {
+		return elevLowest;
+	}
+
 }
