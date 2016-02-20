@@ -1,9 +1,5 @@
 package sp_delostrelec.heart;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 /**
  *
@@ -11,7 +7,9 @@ import java.io.IOException;
  */
 public class Terrain {
 
-	private int elevHighest, elevLowest;
+	private static final int ELEV_RANGE_FIX = 1;
+	
+	private final int elevHighest, elevLowest;
 	int width, height;
 	int[][] field;
 
@@ -26,8 +24,8 @@ public class Terrain {
 		this.field = field;
 		this.height = field.length;
 		this.width = field[0].length;
-		this.elevHighest = highest;
-		this.elevLowest = lowest;
+		this.elevHighest = highest + ELEV_RANGE_FIX;
+		this.elevLowest = lowest - ELEV_RANGE_FIX;
 	}
 
 	private void checkXY(int x, int y) throws IllegalArgumentException {
