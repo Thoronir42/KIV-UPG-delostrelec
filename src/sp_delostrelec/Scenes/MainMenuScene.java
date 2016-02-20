@@ -16,7 +16,9 @@ import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import sp_delostrelec.IO.FileBrowser;
+import sp_delostrelec.Render.ColorPicker;
 import sp_delostrelec.Render.TerrainRenderer;
 import sp_delostrelec.heart.Terrain;
 import sp_delostrelec.heart.Warzone;
@@ -109,7 +111,8 @@ public class MainMenuScene extends DeloScene {
 		}
 		Terrain t = wz.getTerrain();
 		this.tRend.setTerrain(t);
-		this.tRend.render(this.can_preview.getGraphicsContext2D());
+		//this.tRend.render(this.can_preview.getGraphicsContext2D(), new ColorPicker.Monochromatic(t, Color.LIME));
+		this.tRend.render(this.can_preview.getGraphicsContext2D(), new ColorPicker.ColorSequence(t));
 
 	}
 
