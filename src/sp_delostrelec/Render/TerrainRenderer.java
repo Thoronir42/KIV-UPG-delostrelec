@@ -2,6 +2,7 @@ package sp_delostrelec.Render;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Affine;
 import sp_delostrelec.heart.Terrain;
 
 /**
@@ -46,6 +47,13 @@ public class TerrainRenderer {
 		int height;
 		g.setFill(Color.PINK);
 		g.fillRect(0, 0, canvasWidth, canvasHeight);
+		
+		Affine defAffine = g.getTransform();
+		
+		double dX = (canvasWidth - terrainCols * blockWidth) / 2;
+		double dY = (canvasWidth - terrainRows * blockHeight) / 2;
+		
+		g.translate(dX, dY);
 		for (int row = 0; row < terrainRows; row++) {
 			for (int col = 0; col < terrainCols; col++) {
 				height = this.terrain.getField(col, row);
@@ -53,6 +61,8 @@ public class TerrainRenderer {
 				g.fillRect(col * blockWidth, row * blockHeight, blockWidth, blockHeight);
 			}
 		}
+		
+		g.setTransform(defAffine);
 	}
 
 	public int heightOn(double normX, double normY) {
