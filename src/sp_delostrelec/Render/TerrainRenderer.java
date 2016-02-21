@@ -41,16 +41,28 @@ public class TerrainRenderer {
 	}
 
 	public void render(GraphicsContext g, IColorPicker colorPicker) {
+		render(g, colorPicker, false);
+	}
+	
+	public void render(GraphicsContext g, IColorPicker colorPicker, boolean scaleToFit) {
 		int height;
 		g.setFill(Color.PINK);
 		g.fillRect(0, 0, canvasWidth, canvasHeight);
 
 		Affine defAffine = g.getTransform();
-		
-		double dX = (canvasWidth - terrainCols * blockWidth) / 2;
-		double dY = (canvasWidth - terrainRows * blockHeight) / 2;
-		
-		g.translate(dX, dY);
+
+		if (!scaleToFit) {
+			double dX = (canvasWidth - terrainCols * blockSize) / 2;
+			double dY = (canvasHeight - terrainRows * blockSize) / 2;
+			g.translate(dX, dY);
+		} else {
+			double scale = Math.min(canvasWidth / (terrainCols * blockSize) ,
+					canvasHeight / (terrainCols * blockSize));
+			double dX = (canvasWidth - terrainCols * blockSize * scale) / 2;
+			double dY = (canvasHeight - terrainRows * blockSize * scale) / 2;
+			g.scale(scale, scale);
+			g.translate(dX / scale, dY / scale);
+		}
 		for (int row = 0; row < terrainRows; row++) {
 			for (int col = 0; col < terrainCols; col++) {
 				height = this.terrain.getField(col, row);
