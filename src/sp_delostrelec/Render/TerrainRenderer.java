@@ -14,7 +14,7 @@ public class TerrainRenderer {
 	private Terrain terrain;
 	private int terrainCols, terrainRows;
 
-	private int blockWidth, blockHeight;
+	private int blockSize;
 	private double canvasWidth, canvasHeight;
 
 	public TerrainRenderer(double canvasWidth, double canvasHeight) {
@@ -23,7 +23,7 @@ public class TerrainRenderer {
 
 	public TerrainRenderer(Terrain t, double canvasWidth, double canvasHeight) {
 		this.terrain = t;
-		
+
 		this.canvasWidth = canvasWidth;
 		this.canvasHeight = canvasHeight;
 	}
@@ -32,22 +32,19 @@ public class TerrainRenderer {
 		this.terrain = terrain;
 		this.terrainCols = this.terrain.getWidth();
 		this.terrainRows = this.terrain.getHeight();
-		
+
 		this.prepareRenderSizes();
 	}
 
 	private void prepareRenderSizes() {
-		blockWidth = (int) (canvasWidth / terrainCols);
-		blockHeight = (int) (canvasHeight / terrainRows);
+		blockSize = (int) Math.min(canvasWidth / terrainCols, canvasHeight / terrainRows);
 	}
-
-	
 
 	public void render(GraphicsContext g, IColorPicker colorPicker) {
 		int height;
 		g.setFill(Color.PINK);
 		g.fillRect(0, 0, canvasWidth, canvasHeight);
-		
+
 		Affine defAffine = g.getTransform();
 		
 		double dX = (canvasWidth - terrainCols * blockWidth) / 2;
@@ -58,10 +55,10 @@ public class TerrainRenderer {
 			for (int col = 0; col < terrainCols; col++) {
 				height = this.terrain.getField(col, row);
 				g.setFill(colorPicker.getColor(height));
-				g.fillRect(col * blockWidth, row * blockHeight, blockWidth, blockHeight);
+				g.fillRect(col * blockSize, row * blockSize, blockSize, blockSize);
 			}
 		}
-		
+
 		g.setTransform(defAffine);
 	}
 

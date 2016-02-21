@@ -105,7 +105,7 @@ public class MainMenuScene extends DeloScene {
 			return;
 		}
 		Warzone wz = Warzone.loadFromFile(f);
-		if(wz == null){
+		if (wz == null) {
 			System.err.println("Could not load warzone data");
 			return;
 		}
@@ -125,7 +125,7 @@ public class MainMenuScene extends DeloScene {
 		double normX = x / this.can_preview.getWidth();
 		double normY = y / this.can_preview.getHeight();
 		System.out.format("Canvas clicked at %.2fx%.2f height: %d\n", normX, normY, this.tRend.heightOn(normX, normY));
-		
+
 	}
 
 }

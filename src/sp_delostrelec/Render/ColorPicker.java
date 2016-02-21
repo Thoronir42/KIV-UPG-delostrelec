@@ -78,7 +78,7 @@ public class ColorPicker {
 					/ Math.max(colorBorders[lowBorder + 1] - colorBorders[lowBorder], 1);
 			float pctB = 1 - pctA;
 
-			System.out.format("Height: %03d is in lb:%d <%03d, %03d>, pctA: %.2f\n", height, lowBorder, colorBorders[lowBorder], colorBorders[lowBorder + 1], pctB);
+			//System.out.format("Height: %03d is in lb:%d <%03d, %03d>, pctA: %.2f\n", height, lowBorder, colorBorders[lowBorder], colorBorders[lowBorder + 1], pctB);
 
 			return this.individualColors[height - this.terrain.getElevLowest()] = new Color(
 					pctB * elevationColors[lowBorder].getRed() + pctA * elevationColors[lowBorder + 1].getRed(),

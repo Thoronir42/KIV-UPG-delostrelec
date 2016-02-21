@@ -50,6 +50,7 @@ public class Warzone {
 			Target tar = (Target) loadActor(dis, Target.class);
 			
 			Terrain ter = loadTerrain(dis, width, height);
+
 			return new Warzone(ter, sho, tar);
 
 		} catch (IOException e) {
